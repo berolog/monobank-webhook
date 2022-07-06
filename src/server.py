@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 MONO_TOKEN = 'u8PI0F5SA36yJrCPaWamBEGsTFjyrZWdkyRbIgYf_Ltk'
 mono = monobank.Client(MONO_TOKEN)
-mono.create_webhook('http://127.0.0.1:8000')
+mono.create_webhook('http://0.0.0.0:8000')
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
