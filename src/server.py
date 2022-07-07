@@ -1,12 +1,14 @@
 from flask import Flask, request, abort
 import monobank
+import os
+import time
 
 app = Flask(__name__)
 
 
-
 MONO_TOKEN = 'u8PI0F5SA36yJrCPaWamBEGsTFjyrZWdkyRbIgYf_Ltk'
 mono = monobank.Client(MONO_TOKEN)
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -19,5 +21,6 @@ def webhook():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
-    mono.create_webhook('localhost:8000')
+    app.run(host='0.0.0.0', port=os.getenv('PORT', default=8000), debug=True)
+    time.sleep(15)
+    mono.create_webhook('https://monobank-webhook.herokuapp.com/webhook')
