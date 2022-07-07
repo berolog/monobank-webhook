@@ -12,7 +12,7 @@ mono = monobank.Client(MONO_TOKEN)
 @app.route('/webhook', methods=['POST'])
 def webhook():
     if request.method == 'POST':
-        #if request.json['data']['account'] == '7dxOnvxACiayZfZzNvs6fA':
+        ##if request.json['data']['account'] == '7dxOnvxACiayZfZzNvs6fA':
         print(request.json)
         return 'success', 200
     else:
