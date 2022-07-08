@@ -42,10 +42,10 @@ async def monobank(request):
                 amount = data['data']['statementItem']['amount']/100
                 balance = data['data']['statementItem']['balance']/100
 
-                await bot.send_message(chat_id=389471081, text=f"------ Выписка ------\n"
+                await bot.send_message(chat_id=389471081, text=f"------------ Выписка ------------\n\n"
                                                                f"Описание: {description}\n"
-                                                               f"Сумма: {amount}\n"
-                                                               f"Баланс: {balance}")
+                                                               f"Сумма: {int(amount)} грн\n"
+                                                               f"Баланс: {balance} грн")
         except json.decoder.JSONDecodeError:
             print('No data')
     return web.json_response({"status": "OK"}, status=200)
