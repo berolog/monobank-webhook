@@ -12,7 +12,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-#routes = web.RouteTableDef()
+routes = web.RouteTableDef()
 
 
 @dp.message_handler(commands=["start"])
@@ -21,14 +21,14 @@ async def cmd_start(message: types.Message):
 
 
 async def on_startup(dispatcher):
-    await bot.set_webhook('https://smee.io/lh74EPiFZgDmsPd', drop_pending_updates=True)
+    await bot.set_webhook('https://monobank-webhook.herokuapp.com/bot', drop_pending_updates=True)
 
 
 async def on_shutdown(dispatcher):
     await bot.delete_webhook()
 
 
-#@routes.post('/post')
+@routes.post('/post')
 async def api_handler(request):
     await bot.send_message(chat_id=389471081, text='test')
     return web.json_response({"status": "OK"}, status=200)
@@ -36,13 +36,13 @@ async def api_handler(request):
 
 app = web.Application()
 # add a custom route
-app.add_routes([web.post('/post', api_handler)])
+app.add_routes(routes)
 # every request to /bot route will be retransmitted to dispatcher to be handled
 # as a bot update
 configure_app(dp, app, "/bot")
 
-await bot.delete_webhook()
-await bot.set_webhook('https://monobank-webhook.herokuapp.com/bot')
+await on_shutdown(dp)
+await on_startup(dp)
 
 
 if __name__ == '__main__':
