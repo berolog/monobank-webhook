@@ -4,10 +4,13 @@ from aiogram.utils.executor import start_webhook, set_webhook
 from aiohttp import web
 import logging
 import os
+import monobank
 
 
 API_TOKEN = "5162165790:AAHD_2v5tB5hntJY9S0Gy-mtnAIrFc--uSg"
+MONO_TOKEN = 'u8PI0F5SA36yJrCPaWamBEGsTFjyrZWdkyRbIgYf_Ltk'
 
+mono = monobank.Client(MONO_TOKEN)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
@@ -41,6 +44,7 @@ app.add_routes(routes)
 # as a bot update
 configure_app(dp, app, "/bot")
 
+mono.create_webhook('https://monobank-webhook.herokuapp.com/post')
 on_shutdown(dp)
 on_startup(dp)
 
