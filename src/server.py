@@ -30,7 +30,7 @@ async def on_shutdown(dispatcher):
 
 
 async def monobank(request):
-    await request.json()
+    print(request.json())
 #    await bot.send_message(chat_id=389471081, text='test')
     return web.json_response({"status": "OK"}, status=200)
 
