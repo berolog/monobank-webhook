@@ -41,8 +41,8 @@ app.add_routes(routes)
 # as a bot update
 configure_app(dp, app, "/bot")
 
-await on_shutdown(dp)
-await on_startup(dp)
+on_shutdown(dp)
+on_startup(dp)
 
 
 if __name__ == '__main__':
