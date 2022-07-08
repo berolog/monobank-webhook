@@ -37,9 +37,10 @@ async def monobank(request):
             print(type(data))
             account = data['data']['account']
             if account == '7dxOnvxACiayZfZzNvs6fA':
-                description = account['statementItem']['description']
-                amount = account['statementItem']['amount']/100
-                balance = account['statementItem']['balance']/100
+                print(account)
+                description = account['statementItem'][0]['description']
+                amount = account['statementItem'][0]['amount']/100
+                balance = account['statementItem'][0]['balance']/100
 
                 await bot.send_message(chat_id=389471081, text=f"------ Выписка ------\n"
                                                                f"Описание: {description}\n"
