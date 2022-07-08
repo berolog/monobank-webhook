@@ -31,23 +31,24 @@ async def on_shutdown(dispatcher):
 
 
 async def monobank(request):
-    if request.headers['Content-Type'] == 'application/json':
-        try:
-            data = await request.json()
-            print(data)
-            account = data['data']['account']
-            print(account)
-            if account == '7dxOnvxACiayZfZzNvs6fA':
-                description = data['data']['statementItem']['description']
-                amount = data['data']['statementItem']['amount']/100
-                balance = data['data']['statementItem']['balance']/100
+    print(request.method)
+    try:
+        data = await request.json()
+        print(data)
+        account = data['data']['account']
+        print(account)
+        if account == '7dxOnvxACiayZfZzNvs6fA':
+            description = data['data']['statementItem']['description']
+            amount = data['data']['statementItem']['amount']/100
+            balance = data['data']['statementItem']['balance']/100
 
-                await bot.send_message(chat_id=389471081, text=f"------------ Выписка ------------\n\n"
-                                                               f"Описание: {description}\n"
-                                                               f"Сумма: {int(amount)} грн\n"
-                                                               f"Баланс: {balance} грн")
-        except json.decoder.JSONDecodeError:
-            print('No data')
+            await bot.send_message(chat_id=389471081, text=f"------------ Выписка ------------\n\n"
+                                                           f"Описание: {description}\n"
+                                                           f"Сумма: {int(amount)} грн\n"
+                                                           f"Баланс: {balance} грн")
+    except json.decoder.JSONDecodeError:
+        print('No POST data')
+
     return web.json_response({"status": "OK"}, status=200)
 
 
