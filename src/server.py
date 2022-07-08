@@ -40,8 +40,6 @@ app.add_routes([web.route('*', '/mono', monobank)])
 # as a bot update
 configure_app(dp, app, "/bot")
 
-mono.create_webhook('https://monobank-webhook.herokuapp.com/mono')
-
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
@@ -53,5 +51,6 @@ if __name__ == '__main__':
                            route_name='bot',
                            web_app=app)
     executor.run_app(port=os.getenv('PORT', 9000))
+    mono.create_webhook('https://monobank-webhook.herokuapp.com/mono')
 
 
