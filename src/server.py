@@ -22,6 +22,7 @@ async def cmd_start(message: types.Message):
 
 async def on_startup(dispatcher):
     await bot.set_webhook('https://monobank-webhook.herokuapp.com/bot', drop_pending_updates=True)
+    await mono.create_webhook('https://monobank-webhook.herokuapp.com/mono')
 
 
 async def on_shutdown(dispatcher):
@@ -51,6 +52,6 @@ if __name__ == '__main__':
                            route_name='bot',
                            web_app=app)
     executor.run_app(port=os.getenv('PORT', 9000))
-    mono.create_webhook('https://monobank-webhook.herokuapp.com/mono')
+
 
 
