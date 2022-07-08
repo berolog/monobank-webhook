@@ -44,15 +44,11 @@ app.add_routes(routes)
 # as a bot update
 configure_app(dp, app, "/bot")
 
-mono.create_webhook('https://monobank-webhook.herokuapp.com/post')
-on_shutdown(dp)
-on_startup(dp)
+#mono.create_webhook('https://monobank-webhook.herokuapp.com/post')
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    web.run_app(app, port=os.getenv('PORT', 9000))
-'''    
     executor = set_webhook(dispatcher=dp,
                            webhook_path='/bot',
                            skip_updates=True,
@@ -60,5 +56,6 @@ if __name__ == '__main__':
                            on_shutdown=on_shutdown,
                            route_name='bot',
                            web_app=app)
-'''
+    executor.run_app(port=os.getenv('PORT', 9000))
+
 
