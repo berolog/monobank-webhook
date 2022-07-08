@@ -1,3 +1,4 @@
+import aiohttp
 from aiogram import Bot, Dispatcher, types
 from aiogram.dispatcher.webhook import configure_app
 from aiogram.utils.executor import start_webhook, set_webhook
@@ -29,7 +30,8 @@ async def on_shutdown(dispatcher):
 
 
 async def monobank(request):
-    await bot.send_message(chat_id=389471081, text='test')
+    await request.json()
+#    await bot.send_message(chat_id=389471081, text='test')
     return web.json_response({"status": "OK"}, status=200)
 
 
