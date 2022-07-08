@@ -15,9 +15,6 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-routes = web.RouteTableDef()
-
-
 @dp.message_handler(commands=["start"])
 async def cmd_start(message: types.Message):
     await message.reply("start!")
@@ -31,20 +28,19 @@ async def on_shutdown(dispatcher):
     await bot.delete_webhook()
 
 
-@routes.post('/post')
-async def api_handler(request):
+async def monobank(request):
     await bot.send_message(chat_id=389471081, text='test')
     return web.json_response({"status": "OK"}, status=200)
 
 
 app = web.Application()
 # add a custom route
-app.add_routes(routes)
+app.add_routes([web.route('*', '/mono', monobank)])
 # every request to /bot route will be retransmitted to dispatcher to be handled
 # as a bot update
 configure_app(dp, app, "/bot")
 
-#mono.create_webhook('https://monobank-webhook.herokuapp.com/post')
+mono.create_webhook('https://monobank-webhook.herokuapp.com/mono')
 
 
 if __name__ == '__main__':
