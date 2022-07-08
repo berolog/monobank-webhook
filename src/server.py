@@ -33,7 +33,7 @@ async def on_shutdown(dispatcher):
 async def monobank(request):
     if request.headers['Content-Type'] == 'application/json':
         try:
-            account = request.json()['data']['account']
+            account = await request.json()['data']['account']
             if account == '7dxOnvxACiayZfZzNvs6fA':
                 description = account['statementItem']['description']
                 amount = account['statementItem']['amount']/100
