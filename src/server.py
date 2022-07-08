@@ -41,8 +41,8 @@ app.add_routes([web.post('/post', api_handler)])
 # as a bot update
 configure_app(dp, app, "/bot")
 
-bot.delete_webhook()
-bot.set_webhook('https://monobank-webhook.herokuapp.com/bot')
+await bot.delete_webhook()
+await bot.set_webhook('https://monobank-webhook.herokuapp.com/bot')
 
 
 if __name__ == '__main__':
