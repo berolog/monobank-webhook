@@ -6,6 +6,7 @@ from aiohttp import web
 import logging
 import os
 import monobank
+import json
 
 
 API_TOKEN = "5162165790:AAHD_2v5tB5hntJY9S0Gy-mtnAIrFc--uSg"
@@ -30,17 +31,25 @@ async def on_shutdown(dispatcher):
 
 
 async def monobank(request):
-    print(request.headers)
-    print(await request.json())
-#    await bot.send_message(chat_id=389471081, text='test')
+    if request.headers['Content-Type'] == 'application/json':
+        try:
+            account = request.json()['data']['account']
+            if account == '7dxOnvxACiayZfZzNvs6fA':
+                description = account['statementItem']['description']
+                amount = account['statementItem']['amount']/100
+                balance = account['statementItem']['balance']/100
+
+                await bot.send_message(chat_id=389471081, text=f"------ Выписка ------\n"
+                                                               f"Описание: {description}\n"
+                                                               f"Сумма: {amount}\n"
+                                                               f"Баланс: {balance}")
+        except json.decoder.JSONDecodeError:
+            print('No data')
     return web.json_response({"status": "OK"}, status=200)
 
 
 app = web.Application()
-# add a custom route
 app.add_routes([web.route('*', '/mono', monobank)])
-# every request to /bot route will be retransmitted to dispatcher to be handled
-# as a bot update
 configure_app(dp, app, "/bot")
 
 
